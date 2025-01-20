@@ -3,7 +3,7 @@
 Here are some thoughts on `Python` programming language from the points below to discuss.
 
 > [!NOTE]
-> However, it is a good idea to consider the experience and skills of software developers when choosing tools for CI/CD development.
+> However, it is a good idea to consider the project requirements, experience and skills of software developers when choosing tools for CI/CD development.
 
 ## Some common steps in a CI setup include linting, testing, and building. What are the specific tools for taking care of these steps in the ecosystem of the language you picked?
 
@@ -69,7 +69,11 @@ It depends on many things, such as:
 * Data security
 * Size and type of project
 
-This depends totally on situation and without more detailed information, this cannot be answered. Comparison between different services.
+This depends totally on situation and without more detailed information, this cannot be answered.
+
+The most likely option is a hosted service without your own hardware.
+
+Comparison between different services is below.
 
 ### On Premise
 
@@ -97,7 +101,6 @@ This depends totally on situation and without more detailed information, this ca
 * Potential compliance challenges 
 * Danger of vendor lock-in
 
-
 ### Hosted
 
 **Pros:**
@@ -111,6 +114,5 @@ This depends totally on situation and without more detailed information, this ca
 * Danger of vendor lock-in
 * Loss of control
 * Limited customization
-
 
 Source: [Hosted vs Cloud vs On Premise Services](https://tealtech.com/blog/hosted-vs-cloud-vs-on-premise/)
