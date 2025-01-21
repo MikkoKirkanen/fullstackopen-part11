@@ -10,4 +10,9 @@ describe('Pokedex', () => {
       )
     ).toBeVisible()
   })
+
+  test('should navigate to pidgeot page', async ({ page }) => {
+    await page.goto('/pokemon/pidgeot')
+    await expect(page.getByText('pidgeot')).toBeVisible()
+  })
 })
