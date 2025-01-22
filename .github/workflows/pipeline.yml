@@ -43,6 +43,7 @@ jobs:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
+
   tag_release:
     needs: [simple_deployment_pipeline]
     if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
