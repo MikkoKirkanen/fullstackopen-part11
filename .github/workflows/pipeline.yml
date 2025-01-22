@@ -38,14 +38,14 @@ jobs:
           path: playwright-report/
           retention-days: 30
       - name: Deploy
-        if: contains(toJson(github.event.commits), '#skip') == 'false' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master' && contains(toJson(github.event.commits), '#skip') != true
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
   tag_release:
     needs: [simple_deployment_pipeline]
-    if: contains(toJson(github.event.commits), '#skip') == 'false' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master' && contains(toJson(github.event.commits), '#skip') != true
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -56,4 +56,4 @@ jobs:
         uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: minor
+          DEFAULT_BUMP: patch
