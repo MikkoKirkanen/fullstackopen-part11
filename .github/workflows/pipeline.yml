@@ -37,7 +37,6 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-
       - name: Deploy
         if: contains(toJson(github.event.commits), '#skip') == false && github.ref == 'refs/heads/main'
         env:
@@ -53,7 +52,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
           fetch-depth: '0'
-
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.71.0
         env:
