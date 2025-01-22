@@ -46,7 +46,7 @@ jobs:
           curl "$deploy_url"
   tag_release:
     needs: [simple_deployment_pipeline]
-    if: github.event.pull_request.merged == true
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
