@@ -43,15 +43,21 @@ jobs:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
+
+  discord_notification:
+    needs: [simple_deployment_pipeline]
+    if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy success
-        uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: success()
         with:
           severity: info
           details: Deploy Succeeded!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Build Failure
-        uses: rjstone/discord-webhook-notify@v1
+        uses: rjstone/discord-webhook-notify@v1.0.4
         if: failure()
         with:
           severity: error
@@ -61,7 +67,7 @@ jobs:
   tag_release:
     needs: [simple_deployment_pipeline]
     if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
