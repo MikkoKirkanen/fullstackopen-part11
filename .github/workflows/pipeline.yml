@@ -57,7 +57,7 @@ jobs:
           content: ✅ Deployment Succeeded!
           embed-color: 65280
           embed-title: Information
-          embed-description: '**Repository:** [${{github.repository}}](${{github.event.repository.html_url}})\n**ULR:** [fullstackopen-part11-869t.onrender.com/](https://fullstackopen-part11-869t.onrender.com/)'
+          embed-description: '**Repository:** [${{github.repository}}](${{github.event.repository.html_url}}) \n**ULR:** [fullstackopen-part11-869t.onrender.com/](https://fullstackopen-part11-869t.onrender.com/)'
           embed-footer-text: Deploy icons created by kerismaker - Flaticon
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
 
@@ -74,7 +74,7 @@ jobs:
           content: ❌ Build Failed!
           embed-color: 16711680
           embed-title: Information
-          embed-description: '**Repository:** [${{github.repository}}](${{github.event.repository.html_url}})\n**Commit:** [${{github.event.head_commit.url}}](${{github.event.head_commit.url}})'
+          embed-description: '**Repository:** [${{github.repository}}](${{github.event.repository.html_url}}) \n**Commit:** [${{github.event.head_commit.url}}](${{github.event.head_commit.url}})'
           embed-footer-text: Failed icons created by Prashanth Rapolu 15 - Flaticon
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
 
