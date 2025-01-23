@@ -51,8 +51,9 @@ jobs:
 
   discord_notification:
     needs: [deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v4
       - name: Deploy success
         uses: rjstone/discord-webhook-notify@v1.0.4
         if: success()
