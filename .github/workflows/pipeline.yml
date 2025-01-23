@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  simple_deployment_pipeline:
+  tests:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -37,17 +37,42 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+  deploy:
+    needs: [tests]
+    if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy
-        if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
 
-  tag_release:
-    needs: [simple_deployment_pipeline]
+  discord_notification:
+    needs: [deploy]
     if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy success
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: success()
+        with:
+          severity: info
+          details: Deploy Succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Build Failure
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: failure()
+        with:
+          severity: error
+          details: Build Failed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+  tag_release:
+    needs: [deploy]
+    if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
