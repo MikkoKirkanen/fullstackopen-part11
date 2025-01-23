@@ -46,7 +46,7 @@ jobs:
           embed-description: '**Repository:** [${{github.repository}}](${{github.event.repository.html_url}})\n**ULR:** [fullstackopen-part11-869t.onrender.com/](https://fullstackopen-part11-869t.onrender.com/)'
           embed-footer-text: Medical icons created by Freepik - Flaticon
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Health check success Discord notification
+      - name: Health check failed Discord notification
         uses: tsickert/discord-webhook@v6.0.0
         if: failure()
         with:
