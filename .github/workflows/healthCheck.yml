@@ -38,7 +38,7 @@ jobs:
         uses: tsickert/discord-webhook@v6.0.0
         if: success()
         with:
-          username: Mikko Kirkanen
+          username: Mikko Kirkanen - Health
           avatar-url: https://cdn-icons-png.flaticon.com/64/3004/3004458.png
           content: ✅ Health Check Succeeded!
           embed-color: 65280
@@ -48,9 +48,9 @@ jobs:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Health check success Discord notification
         uses: tsickert/discord-webhook@v6.0.0
-        if: success()
+        if: failure()
         with:
-          username: Mikko Kirkanen
+          username: Mikko Kirkanen - Health
           avatar-url: https://cdn-icons-png.flaticon.com/64/4325/4325956.png
           content: ❌ Health Check Failed!
           embed-color: 16711680
