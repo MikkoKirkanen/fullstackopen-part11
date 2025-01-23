@@ -48,22 +48,34 @@ jobs:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
-
-  discord_notification:
-    needs: [deploy]
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy success
         uses: tsickert/discord-webhook@v6.0.0
         if: success()
         with:
-          content: Deploy Succeeded!
+          username: Mikko Kirkanen - GitHub
+          avatar-url: https://cdn-icons-png.flaticon.com/64/6864/6864004.png
+          content: ✅ Deployment Succeeded!
+          embed-color: 65280
+          embed-title: Information
+          embed-description: "**Repository:** [${{github.repository}}](${{github.event.repository.html_url}})\n**ULR:**[fullstackopen-part11-869t.onrender.com/](https://fullstackopen-part11-869t.onrender.com/)"
+          embed-footer-text: '[Deploy icons created by kerismaker - Flaticon](https://www.flaticon.com/free-icons/deploy)'
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+
+  discord_build_failure:
+    needs: [tests]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
       - name: Build Failure
         uses: tsickert/discord-webhook@v6.0.0
-        if: failure()
         with:
-          content: Build Failed!
+          username: Mikko Kirkanen - GitHub
+          avatar-url: https://cdn-icons-png.flaticon.com/64/6818/6818112.png
+          content: ❌ Build Failed!
+          embed-color: 16711680
+          embed-title: Information
+          embed-description: '**Repository:** [${{github.repository}}](${{github.event.repository.html_url}})'
+          embed-footer-text: '[Failed icons created by Prashanth Rapolu 15 - Flaticon](https://www.flaticon.com/free-icons/failed)'
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
