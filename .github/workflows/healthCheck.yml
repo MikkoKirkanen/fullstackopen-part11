@@ -1,13 +1,8 @@
 name: Health Check
 
 on:
-  workflow_run:
-    workflows: [Deployment pipeline]
-    branches: [main]
-    types:
-      - completed
-  # schedule:
-  #   - cron: '*/10 * * * *'
+  schedule:
+    - cron: '*/10 * * * *'
 env:
   URL: https://fullstackopen-part11-869t.onrender.com/health
 
@@ -43,7 +38,7 @@ jobs:
           content: ✅ Health Check Succeeded!
           embed-color: 65280
           embed-title: Information
-          embed-description: '**Repository:** [${{github.repository}}](${{github.event.repository.html_url}}) \n**ULR:** [fullstackopen-part11-869t.onrender.com/](https://fullstackopen-part11-869t.onrender.com/)'
+          embed-description: "**Repository:** [${{github.repository}}](${{github.event.repository.html_url}})\n**ULR:** [fullstackopen-part11-869t.onrender.com/](https://fullstackopen-part11-869t.onrender.com/)"
           embed-footer-text: Medical icons created by Freepik - Flaticon
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Health check failed Discord notification
@@ -55,6 +50,6 @@ jobs:
           content: ❌ Health Check Failed!
           embed-color: 16711680
           embed-title: Information
-          embed-description: '**Repository:** [${{github.repository}}](${{github.event.repository.html_url}}) \n**ULR:** [fullstackopen-part11-869t.onrender.com/](https://fullstackopen-part11-869t.onrender.com/)'
+          embed-description: "**Repository:** [${{github.repository}}](${{github.event.repository.html_url}})\n**ULR:** [fullstackopen-part11-869t.onrender.com/](https://fullstackopen-part11-869t.onrender.com/)"
           embed-footer-text: Flames icons created by Flat Icons - Flaticon
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
