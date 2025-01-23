@@ -40,10 +40,10 @@ jobs:
 
   deploy:
     needs: [tests]
+    if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
-        if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
