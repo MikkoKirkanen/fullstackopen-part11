@@ -51,23 +51,20 @@ jobs:
 
   discord_notification:
     needs: [deploy]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - name: Deploy success
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        uses: tsickert/discord-webhook@v6.0.0
         if: success()
         with:
-          severity: info
-          details: Deploy Succeeded!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          content: Deploy Succeeded!
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Build Failure
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        uses: tsickert/discord-webhook@v6.0.0
         if: failure()
         with:
-          severity: error
-          details: Build Failed!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          content: Build Failed!
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
     needs: [deploy]
@@ -81,4 +78,4 @@ jobs:
         uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: minor
+          DEFAULT_BUMP: patch
