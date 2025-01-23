@@ -40,7 +40,7 @@ jobs:
 
   deploy:
     needs: [tests]
-    if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
+    if: github.ref == 'refs/heads/main' && !contains(toJson(github.event.commits), '#skip')
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
@@ -51,7 +51,6 @@ jobs:
 
   discord_notification:
     needs: [deploy]
-    if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
     runs-on: ubuntu-latest
     steps:
       - name: Deploy success
@@ -71,7 +70,6 @@ jobs:
 
   tag_release:
     needs: [deploy]
-    if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
