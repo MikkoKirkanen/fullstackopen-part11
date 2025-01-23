@@ -2,7 +2,7 @@ name: Health Check
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/10 * * * *'
 env:
   URL: https://fullstackopen-part11-869t.onrender.com/health
 
