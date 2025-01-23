@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  simple_deployment_pipeline:
+  tests:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -37,6 +37,11 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+  deploy:
+    needs: [tests]
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy
         if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
         env:
@@ -45,7 +50,7 @@ jobs:
           curl "$deploy_url"
 
   discord_notification:
-    needs: [simple_deployment_pipeline]
+    needs: [deploy]
     if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
     runs-on: ubuntu-latest
     steps:
@@ -65,7 +70,7 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
-    needs: [simple_deployment_pipeline]
+    needs: [deploy]
     if: github.ref == 'refs/heads/main' && contains(toJson(github.event.commits), '#skip') != true
     runs-on: ubuntu-latest
     steps:
