@@ -9,6 +9,10 @@ Fork the repository to complete course exercises
 Read the introductory documentation from Exercise 11.1 
 [Introduction to CI/CD](exercise1.md)
 
+## Exercises 11.20-11.21
+
+[fullstackopen-part11-phonebook](https://github.com/MikkoKirkanen/fullstackopen-part11-phonebook)
+
 ## Commands
 
 Start by running `npm install` inside the project folder
